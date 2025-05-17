@@ -38,7 +38,7 @@ const StudentDashboard = () => {
       if (!courseName) return;
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/materials/by-name/${encodeURIComponent(courseName)}`);
+        const res = await axios.get(`https://coaching-management-system-9w2s.onrender.com/api/materials/by-name/${encodeURIComponent(courseName)}`);
         setMaterials(res.data);
       } catch (err) {
         console.error('Error fetching materials:', err);
