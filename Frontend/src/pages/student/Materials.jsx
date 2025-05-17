@@ -5,7 +5,7 @@ const CourseMaterials = ({ courseId }) => {
   const [materials, setMaterials] = useState([]);
 
   useEffect(() => {
-    axios.get(`https://coaching-management-system-9w2s.onrender.com/api/materials/${courseId}`)
+    axios.get(`/api/materials/${courseId}`)
       .then(res => setMaterials(res.data));
   }, [courseId]);
 
