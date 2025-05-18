@@ -78,7 +78,7 @@ const StudentDashboard = () => {
                       <p className="text-sm text-gray-500">Material ID: {mat._id.slice(-6)}</p>
                     </div>
                     <a
-                      href={`http://localhost:5000${mat.fileUrl}`}
+                      href={`https://coaching-management-system-9w2s.onrender.com${mat.fileUrl}`}
                       download
                       className="mt-4 bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700 text-center"
                     >

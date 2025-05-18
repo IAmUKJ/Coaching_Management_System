@@ -114,7 +114,7 @@ const CourseUpload = () => {
                 <p className="font-medium">{mat.name}</p>
                 {/* View/Download Link */}
                 <a
-                  href={`https://coaching-management-system-9w2s.onrender.com/${mat.fileUrl}`} // Use fileUrl directly
+                  href={`https://coaching-management-system-9w2s.onrender.com${mat.fileUrl}`} // Use fileUrl directly
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline text-sm"
