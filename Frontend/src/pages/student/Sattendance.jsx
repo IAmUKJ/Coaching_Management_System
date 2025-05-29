@@ -9,27 +9,52 @@ const Attendance = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if student is logged in
     const token = sessionStorage.getItem('studentToken');
     const studentData = sessionStorage.getItem('studentData');
 
     if (!token || !studentData) {
-      // Not logged in, redirect to login page
-      navigate('/student-login'); // or your login route
+      navigate('/student-login');
       return;
     }
 
     const student = JSON.parse(studentData);
     const studentId = student._id;
-    // Fetch attendance data for this student
+
     const fetchAttendance = async () => {
       try {
-        const res = await axios.get(`https://coaching-management-system-9w2s.onrender.com/api/attendance/student/${studentId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`, // if your API expects a token
-          },
+        const res = await axios.get(
+          `https://coaching-management-system-9w2s.onrender.com/api/attendance/student/${studentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Deduplicate attendance records to keep only latest per date
+        // Assuming _id can be used to find latest (MongoDB ObjectId increases over time)
+        const uniqueByDateMap = new Map();
+
+        res.data.forEach((record) => {
+          const recordDate = new Date(record.date).toDateString(); // Normalize date (ignoring time)
+          const existingRecord = uniqueByDateMap.get(recordDate);
+
+          if (!existingRecord) {
+            uniqueByDateMap.set(recordDate, record);
+          } else {
+            // Compare _id strings lex order: higher _id is newer
+            if (record._id > existingRecord._id) {
+              uniqueByDateMap.set(recordDate, record);
+            }
+          }
         });
-        setAttendanceData(res.data);
+
+        // Convert Map values to array and sort by date ascending
+        const uniqueAttendance = Array.from(uniqueByDateMap.values()).sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
+
+        setAttendanceData(uniqueAttendance);
       } catch (err) {
         setError(
           err.response?.data?.message ||
@@ -52,8 +77,12 @@ const Attendance = () => {
 
   // Calculate totals
   const totalClasses = attendanceData.length;
-  const totalPresent = attendanceData.filter(record => record.status.toLowerCase() === 'present').length;
-  const totalAbsent = attendanceData.filter(record => record.status.toLowerCase() === 'absent').length;
+  const totalPresent = attendanceData.filter(
+    (record) => record.status.toLowerCase() === 'present'
+  ).length;
+  const totalAbsent = attendanceData.filter(
+    (record) => record.status.toLowerCase() === 'absent'
+  ).length;
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -86,8 +115,14 @@ const Attendance = () => {
         <tbody>
           {attendanceData.map((record) => (
             <tr key={record._id}>
-              <td className="border border-gray-300 p-2">{new Date(record.date).toLocaleDateString()}</td>
-              <td className={`border border-gray-300 p-2 font-semibold ${record.status === 'Present' ? 'text-green-600' : 'text-red-600'}`}>
+              <td className="border border-gray-300 p-2">
+                {new Date(record.date).toLocaleDateString()}
+              </td>
+              <td
+                className={`border border-gray-300 p-2 font-semibold ${
+                  record.status === 'Present' ? 'text-green-600' : 'text-red-600'
+                }`}
+              >
                 {record.status}
               </td>
               <td className="border border-gray-300 p-2">{record.remarks || '-'}</td>
