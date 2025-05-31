@@ -21,25 +21,28 @@ router.get('/courses', async (req, res) => {
   res.json(courses);
 });
 
-// DELETE course
+// DELETE /courses/:id — deletes course and related students
 router.delete('/courses/:id', async (req, res) => {
-  await Course.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Course deleted' });
-});
-// DELETE /api/admit/course/:courseName — delete all students in a course
-router.delete('/course/:courseName', async (req, res) => {
   try {
-    const { courseName } = req.params;
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
 
+    const courseName = course.name;
+
+    // Delete the course
+    await Course.findByIdAndDelete(req.params.id);
+
+    // Delete students enrolled in that course
     const deletedResult = await Student.deleteMany({ course: courseName });
 
     res.json({
-      message: `Deleted ${deletedResult.deletedCount} student(s) enrolled in '${courseName}'.`,
+      message: `Deleted course '${courseName}' and ${deletedResult.deletedCount} student(s).`,
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to delete students by course' });
+    res.status(500).json({ error: 'Failed to delete course and students' });
   }
 });
-
 export default router;
