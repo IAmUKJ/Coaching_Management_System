@@ -37,24 +37,24 @@ const Footer = () => {
                 <div>
                     <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
                     <div className="space-y-3">
-                    <a href="/" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
+                    <Link to="/" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
                         Home
-                    </a>
-                    <a href="/about" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
+                    </Link>
+                    <Link to="/about" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
                         About
-                    </a>
-                    <a href="/courses" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
+                    </Link>
+                    <Link to="/courses" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
                         Courses
-                    </a>
-                    <a href="/contact" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
+                    </Link>
+                    <Link tp="/contact" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
                         Contact
-                    </a>
-                    <a href="/student/dashboard" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
+                    </Link>
+                    <Link to="/student/dashboard" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
                         Student Portal
-                    </a>
-                    <a href="/teacher/login" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
+                    </Link>
+                    <Link to="/teacher/login" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
                         Teacher Portal
-                    </a>
+                    </Link>
                     </div>
                 </div>
 
