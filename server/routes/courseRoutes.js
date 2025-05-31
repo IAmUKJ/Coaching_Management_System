@@ -21,33 +21,10 @@ router.get('/courses', async (req, res) => {
   res.json(courses);
 });
 
-// DELETE course and associated students
-router.delete('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    // Step 1: Find course by ID to get its name
-    const course = await Course.findById(id);
-    if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
-    }
-
-    const courseName = course.name;
-
-    // Step 2: Delete the course
-    await Course.findByIdAndDelete(id);
-
-    // Step 3: Delete students enrolled in this course
-    const deletedStudents = await Student.deleteMany({ course: courseName });
-
-    res.json({
-      message: `Course '${courseName}' deleted successfully.`,
-      deletedStudents: deletedStudents.deletedCount,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to delete course and associated students' });
-  }
+// DELETE course
+router.delete('/courses/:id', async (req, res) => {
+  await Course.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Course deleted' });
 });
 
 export default router;
