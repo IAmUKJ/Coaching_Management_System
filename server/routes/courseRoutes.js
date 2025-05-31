@@ -21,28 +21,33 @@ router.get('/courses', async (req, res) => {
   res.json(courses);
 });
 
-// DELETE /courses/:id — deletes course and related students
-router.delete('/courses/:id', async (req, res) => {
+// DELETE course and associated students
+router.delete('/:id', async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
+    const { id } = req.params;
+
+    // Step 1: Find course by ID to get its name
+    const course = await Course.findById(id);
     if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
+      return res.status(404).json({ error: 'Course not found' });
     }
 
     const courseName = course.name;
 
-    // Delete the course
-    await Course.findByIdAndDelete(req.params.id);
+    // Step 2: Delete the course
+    await Course.findByIdAndDelete(id);
 
-    // Delete students enrolled in that course
-    const deletedResult = await Student.deleteMany({ course: courseName });
+    // Step 3: Delete students enrolled in this course
+    const deletedStudents = await Student.deleteMany({ course: courseName });
 
     res.json({
-      message: `Deleted course '${courseName}' and ${deletedResult.deletedCount} student(s).`,
+      message: `Course '${courseName}' deleted successfully.`,
+      deletedStudents: deletedStudents.deletedCount,
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to delete course and students' });
+    res.status(500).json({ error: 'Failed to delete course and associated students' });
   }
 });
+
 export default router;
