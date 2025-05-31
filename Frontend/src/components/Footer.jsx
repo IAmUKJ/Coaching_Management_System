@@ -22,15 +22,15 @@ const Footer = () => {
                     Empowering students to achieve academic excellence with expert faculty, personalized mentorship, and proven results since 2009.
                     </p>
                     <div className="flex space-x-4">
-                    <a href="Contact" className="bg-gray-800 hover:bg-blue-600 p-3 rounded-full transition-all duration-300 transform hover:scale-110">
+                    <Link to="/contact" className="bg-gray-800 hover:bg-blue-600 p-3 rounded-full transition-all duration-300 transform hover:scale-110">
                         <Phone className="h-5 w-5" />
-                    </a>
-                    <a href="Contact" className="bg-gray-800 hover:bg-blue-600 p-3 rounded-full transition-all duration-300 transform hover:scale-110">
+                    </Link>
+                    <Link to="/contact" className="bg-gray-800 hover:bg-blue-600 p-3 rounded-full transition-all duration-300 transform hover:scale-110">
                         <Mail className="h-5 w-5" />
-                    </a>
-                    <a href="Contact" className="bg-gray-800 hover:bg-blue-600 p-3 rounded-full transition-all duration-300 transform hover:scale-110">
+                    </Link>
+                    <Link to="/contact" className="bg-gray-800 hover:bg-blue-600 p-3 rounded-full transition-all duration-300 transform hover:scale-110">
                         <MapPin className="h-5 w-5" />
-                    </a>
+                    </Link>
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@ const Footer = () => {
                     <Link to="/courses" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
                         Courses
                     </Link>
-                    <Link tp="/contact" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
+                    <Link to="/contact" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
                         Contact
                     </Link>
                     <Link to="/student/dashboard" className="block hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform">
