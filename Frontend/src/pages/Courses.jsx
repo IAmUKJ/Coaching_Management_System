@@ -44,34 +44,32 @@ const UploadMaterialsHome = () => {
 
   // Merge course stats with description
   useEffect(() => {
-    if (admissions.length === 0 || coursesData.length === 0) {
-      setCourseStats([]);
-      return;
-    }
+  if (coursesData.length === 0) {
+    setCourseStats([]);
+    return;
+  }
 
-    const counts = {};
-    admissions.forEach(({ course }) => {
-      const trimmed = course.trim();
-      counts[trimmed] = (counts[trimmed] || 0) + 1;
-    });
+  const counts = {};
+  admissions.forEach(({ course }) => {
+    const trimmed = course.trim();
+    counts[trimmed] = (counts[trimmed] || 0) + 1;
+  });
 
-    const statsArray = Object.entries(counts)
-      .map(([courseName, enrolled]) => {
-        const courseInfo = coursesData.find(
-          (c) => c.name.trim() === courseName
-        );
-        return {
-          courseName,
-          description: courseInfo?.description || "No description provided.",
-          enrolled,
-          seatsLeft: MAX_CAPACITY - enrolled,
-        };
-      })
-      .filter(({ seatsLeft }) => seatsLeft > 0);
+  const statsArray = coursesData.map((c) => {
+    const trimmedName = c.name.trim();
+    const enrolled = counts[trimmedName] || 0;
 
-    setCourseStats(statsArray);
-  }, [admissions, coursesData]);
+    return {
+      courseName: trimmedName,
+      description: c.description || "No description provided.",
+      price: c.price,
+      enrolled,
+      seatsLeft: MAX_CAPACITY - enrolled,
+    };
+  });
 
+  setCourseStats(statsArray); // include all courses, even if enrolled = 0
+}, [admissions, coursesData]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-blue-50 to-indigo-100 py-12 px-4 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -155,6 +153,9 @@ const UploadMaterialsHome = () => {
                     {course.description}
                   </p>
 
+                  <p className="text-sm text-gray-600 mb-6 line-clamp-3 leading-relaxed">
+                    Price : {course.price} per month
+                  </p>
                   {/* Stats */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
