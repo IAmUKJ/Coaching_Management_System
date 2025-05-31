@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { GraduationCap, Phone, Mail, MapPin, Star } from 'lucide-react';
 const Footer = () => {
   return (
