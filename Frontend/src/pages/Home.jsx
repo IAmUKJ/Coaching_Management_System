@@ -3,7 +3,7 @@ import { GraduationCap, Phone, Mail, MapPin, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 // Using your existing image import
 import image from '../assets/image.png';
-import Bright_Future_Coaching_Brochure from '../assets/Bright_Future_Coaching_Brochure.pdf' 
+
 export default function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
@@ -65,15 +65,14 @@ export default function Home() {
                 Enroll Now
               </Link>
 
-              <Link to={Bright_Future_Coaching_Brochure}
-                target="_blank"
-                rel="noopener noreferrer"
+              <a
+                href="/Bright_Future_Coaching_Brochure.pdf"
+                download
+                className="inline-block border-2 border-white hover:bg-white hover:text-blue-600 font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105"
               >
-                <button className="border-2 border-white hover:bg-white hover:text-blue-600 font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105">
-                  Download Brochure
-                </button>
-              </Link>
-              
+                Download Brochure
+              </a>
+
             </div>
 
             {/* Achievement Stats */}
