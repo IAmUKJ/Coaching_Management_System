@@ -44,7 +44,7 @@ const CourseSection = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100">
+    <div className="flex bg-gray-100 min-h-screen">
       {/* Mobile Hamburger Icon */}
       <div className="md:hidden absolute top-[70px] left-4 z-30">
         <button onClick={() => setSidebarOpen(true)} className="space-y-1.5">
