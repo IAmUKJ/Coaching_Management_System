@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GraduationCap, Phone, Mail, MapPin, Star } from 'lucide-react';
-
+import { Link } from 'react-router-dom';
 // Using your existing image import
 import image from '../assets/image.png';
 import Bright_Future_Coaching_Brochure from '../assets/Bright_Future_Coaching_Brochure.pdf' 
@@ -59,22 +59,20 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <a
-                href="courses"
+              <Link to="courses"
                 className="inline-block bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
               >
                 Enroll Now
-              </a>
+              </Link>
 
-              <a
-                href={Bright_Future_Coaching_Brochure}
+              <Link to={Bright_Future_Coaching_Brochure}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <button className="border-2 border-white hover:bg-white hover:text-blue-600 font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105">
                   Download Brochure
                 </button>
-              </a>
+              </Link>
               
             </div>
 
@@ -210,12 +208,11 @@ export default function Home() {
             Secure your seat in our top programs before it's too late! Limited seats available.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="courses"
+            <Link to="courses"
               className="bg-yellow-400 hover:bg-yellow-500 text-indigo-900 font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
             >
               Apply Now - Limited Seats
-            </a>
+            </Link>
             <button className="border-2 border-white hover:bg-white hover:text-blue-600 font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105">
               Schedule Campus Visit
             </button>
