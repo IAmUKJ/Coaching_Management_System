@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/authContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { X } from 'lucide-react';
@@ -9,13 +9,14 @@ const TeacherDashboard = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  if (loading) return <div className="text-center mt-10">Loading...</div>;
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/teacher/login');
+    }
+  }, [loading, user, navigate]);
 
-  if (!user) {
-    navigate('/teacher/login');
-    return null;
-  }
-
+  if (loading || !user) return <div className="text-center mt-10">Loading...</div>;
+  
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* Mobile Hamburger Icon */}

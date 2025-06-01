@@ -1,7 +1,7 @@
 // routes/courses.js
 import express from 'express';
 import Course from '../models/Course.js';
-
+import Student from '../models/Student.js';
 const router = express.Router();
 
 // POST create course
@@ -21,10 +21,33 @@ router.get('/courses', async (req, res) => {
   res.json(courses);
 });
 
-// DELETE course
+// DELETE course and related students
 router.delete('/courses/:id', async (req, res) => {
-  await Course.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Course deleted' });
+  try {
+    const courseId = req.params.id;
+
+    // Find course first (to get its name)
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    const courseName = course.name;
+
+
+    // Delete the course
+    await Course.findByIdAndDelete(courseId);
+
+    // Delete students enrolled in this course by name
+    const deletedStudents = await Student.deleteMany({ course: courseName });
+    
+    res.json({
+      message: `Course '${courseName}' and ${deletedStudents.deletedCount} associated student(s) deleted successfully.`,
+    });
+  } catch (error) {
+    console.error('Error deleting course and students:', error);
+    res.status(500).json({ error: 'Failed to delete course and related students' });
+  }
 });
 
 export default router;

@@ -39,9 +39,25 @@ const CourseSection = () => {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`https://coaching-management-system-9w2s.onrender.com/api/courses/${id}`, { method: 'DELETE' });
-    fetchCourses();
-  };
+  try {
+    const res = await fetch(`https://coaching-management-system-9w2s.onrender.com/api/courses/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'  // optional, but good
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to delete');
+    }
+
+    const data = await res.json();
+    console.log(data); // Should say "Course and related students deleted"
+    fetchCourses();    // Refresh course list
+  } catch (err) {
+    console.error('Error deleting course:', err);
+  }
+};
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
